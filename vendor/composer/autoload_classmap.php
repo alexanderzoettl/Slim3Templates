@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controllers\\Controller' => $baseDir . '/app/Controllers/Controller.php',
+    'App\\Controllers\\HomeController' => $baseDir . '/app/Controllers/HomeController.php',
+    'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'FastRoute\\BadRouteException' => $vendorDir . '/nikic/fast-route/src/BadRouteException.php',
     'FastRoute\\DataGenerator' => $vendorDir . '/nikic/fast-route/src/DataGenerator.php',
     'FastRoute\\DataGenerator\\CharCountBased' => $vendorDir . '/nikic/fast-route/src/DataGenerator/CharCountBased.php',
