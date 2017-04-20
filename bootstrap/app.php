@@ -59,7 +59,7 @@ $container['HomeController'] = function($container){
 };
 
 $container['AboutController'] = function($container){
-	return new \App\Controllers\HomeController($container);
+	return new \App\Controllers\AboutController($container);
 };
 
 require __DIR__ . '/../app/routes.php';
