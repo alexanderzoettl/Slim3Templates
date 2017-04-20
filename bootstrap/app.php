@@ -8,7 +8,16 @@ require __DIR__ . '/../vendor/autoload.php';
 //Slim App Instanz
 $app = new \Slim\App([
 	'settings' => [
-		'displayErrorDetails' => true
+		'displayErrorDetails' => true,
+		'db' => [
+			'driver' => 'mysql',
+			'host' => 'localhost',
+			'database' => 'kfm2.0',
+			'username' => 'root',
+			'password' => '',
+			'charset' => 'utf8',
+			'collation' => 'utf8_unicode_ci'
+		]
 	]
 
 ]);
@@ -16,6 +25,15 @@ $app = new \Slim\App([
 //Container der Instanziierten App
 $container = $app->getContainer();
 
+//Eloquent
+$capsule = new \Illuminate\Database\Capsule\Manager;
+$capsule->addConnection($container['settings']['db']);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+$container['db'] = function ($container) use ($capsule){
+	return $capsule;
+};
 
 $container['view'] = function ($container){
 
