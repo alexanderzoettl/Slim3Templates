@@ -64,12 +64,8 @@ $container['validator'] = function ($container) {
 
 // === Controllers ===
 
-$container['HomeController'] = function($container){
-	return new \App\Controllers\HomeController($container);
-};
-
-$container['AboutController'] = function($container){
-	return new \App\Controllers\AboutController($container);
+$container['StaticPageController'] = function($container){
+	return new \App\Controllers\StaticPageController($container);
 };
 
 $container['AuthController'] = function($container){
@@ -77,7 +73,6 @@ $container['AuthController'] = function($container){
 };
 
 //Middlware
-
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 $app->add(new \App\Middleware\OldInputMiddleware($container));
 
