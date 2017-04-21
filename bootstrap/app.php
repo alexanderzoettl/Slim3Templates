@@ -35,6 +35,7 @@ $container['db'] = function ($container) use ($capsule){
 	return $capsule;
 };
 
+//Twig
 $container['view'] = function ($container){
 
 	//Mgacht eine Twig Instanz und gibt den Pfad mit den views an
@@ -54,6 +55,13 @@ $container['view'] = function ($container){
 	return $view;
 };
 
+//Valiation
+$container['validator'] = function ($container) {
+	return new App\Validation\Validator;
+};
+
+// === Controllers ===
+
 $container['HomeController'] = function($container){
 	return new \App\Controllers\HomeController($container);
 };
@@ -62,4 +70,9 @@ $container['AboutController'] = function($container){
 	return new \App\Controllers\AboutController($container);
 };
 
+$container['AuthController'] = function($container){
+	return new \App\Controllers\Auth\AuthController($container);
+};
+
+//Routes
 require __DIR__ . '/../app/routes.php';
