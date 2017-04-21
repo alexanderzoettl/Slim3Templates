@@ -18,7 +18,7 @@ class AuthController extends Controller
 
 		//Validation Rules
 		$validation = $this->validator->validate($request, [
-			'email' => v::noWhitespace()->notEmpty(),
+			'email' => v::noWhitespace()->notEmpty()->email(),
 			'name' => v::noWhitespace()->notEmpty()->alpha(),
 			'surname' => v::noWhitespace()->notEmpty()->alpha(),
 			'password' => v::notEmpty(),
