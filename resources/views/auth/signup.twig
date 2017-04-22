@@ -6,7 +6,7 @@
 
 		<div class="col-md-6.col-md-offset-3">
 			<div class="panel panel-default">
-				<div class="panel-heading">SignUp</div>
+				<div class="panel-heading">Registrieren</div>
 				<div class="panel-body">
 					<form action="{{ path_for('auth.signup') }}" method="post" autocomplete = "off">
 
@@ -27,7 +27,7 @@
 						{% endif %}
 
 						<div class="form-group{{ errors.surname ? ' has-error' : '' }}">
-							<label for="surname">Surname</label>
+							<label for="surname">Nachname</label>
 							<input type="text" name="surname" id="surname" class="form-control" value="{{ old.surname }}">
 						</div>
 						{% if errors.surname %}
@@ -42,14 +42,14 @@
 						{% endif %}
 
 						<div class="form-group{{ errors.confirm_password ? ' has-error' : '' }}">
-							<label for="confirm_password">Confirm Password</label>
+							<label for="confirm_password">Passwort Bestätigen</label>
 							<input type="password" name="confirm_password" id="confirm_password" class="form-control">
 						</div>
 						{% if errors.confirm_password %}
 							<span class="help-block"><font color="red">{{ errors.confirm_password  }}</font></span>
 						{% endif %}
 
-						<button type="subit" class="btn btn-default">SignUp</button>
+						<button type="subit" class="btn btn-default">Registrieren</button>
 
 					</form>
 				</div>

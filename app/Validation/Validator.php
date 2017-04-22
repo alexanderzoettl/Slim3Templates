@@ -35,10 +35,10 @@ class Validator{
 			} catch (NestedValidationException $e) {
 				//Catch the errors for each field
 				$this->errors[$field] = $this->getFirstErrorMessage($e->findMessages([
-	    			'notEmpty' => '{{name}} darf nicht leer sein!',
+	    			'notEmpty' => 'Das Feld darf nicht leer sein!',
 	    			'email' => 'Es muss eine gültige Emailaddresse eingegeben werden!',
 	    			'alpha' => '{{name}} darf nur aus Buchstaben bestehen!',
-    				'noWhitespace' => '{{name}} darf keine Leerzeichen enthalten!',
+    				'noWhitespace' => 'Das Feld darf keine Leerzeichen enthalten!',
     				'matchesConfirmPassword' => 'Passwörter müssen übereinstimmen!',
     				'emailAvailable' => 'Email existiert bereits!'
     			]));
