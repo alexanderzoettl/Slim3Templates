@@ -1,5 +1,7 @@
 <?php
 
+use Respect\Validation\Validator as v;
+
 session_start();
 
 //Ladet die von Composer installierten Packete (Slim3, Twig, ...)
@@ -75,6 +77,9 @@ $container['AuthController'] = function($container){
 //Middlware
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 $app->add(new \App\Middleware\OldInputMiddleware($container));
+
+//Custom Validation Rules
+v::with('App\\Validation\\Rules\\');
 
 //Routes
 require __DIR__ . '/../app/routes.php';
