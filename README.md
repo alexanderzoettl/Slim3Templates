@@ -6,3 +6,4 @@ Eine überholte Verison von KFM 1.0 wobei auf Professionalität und Effizienz ge
 * Twig
 * Eloquent
 * Respect/Validation
+* CSRF-Protection
