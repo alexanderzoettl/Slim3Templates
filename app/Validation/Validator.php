@@ -40,7 +40,8 @@ class Validator{
 	    			'alpha' => '{{name}} darf nur aus Buchstaben bestehen!',
     				'noWhitespace' => 'Das Feld darf keine Leerzeichen enthalten!',
     				'matchesConfirmPassword' => 'Passwörter müssen übereinstimmen!',
-    				'emailAvailable' => 'Email existiert bereits!'
+    				'emailAvailable' => 'Email existiert bereits!',
+    				'noWhitespace' => 'Keine Leerzeichen erlaubt!'
     			]));
 
 			}

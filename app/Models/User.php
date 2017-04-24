@@ -28,4 +28,9 @@ class User extends Model
 	public static function GetByID($id){
 		return User::where('id' , $id)->first();
 	}
+
+	//Gets the user by email
+	public static function GetByEmail($email){
+		return User::where('email' , $email)->first();
+	}
 }

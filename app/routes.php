@@ -8,3 +8,5 @@ $app->get('/impressum', 'StaticPageController:impressum')->setName('impressum');
 //Authentication (Signup, Signin)
 $app->get('/auth/signup', 'AuthController:getSignUp')->setName('auth.signup');
 $app->post('/auth/signup', 'AuthController:postSignUp');
+$app->get('/auth/signin', 'AuthController:getSignIn')->setName('auth.signin');
+$app->post('/auth/signin', 'AuthController:postSignIn');
