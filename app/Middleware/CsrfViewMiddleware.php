@@ -3,6 +3,7 @@
 namespace App\Middleware;
 
 class CsrfViewMiddleware extends Middleware{
+	
 	public function __invoke($request, $response, $next){
 
 		$nameKey = $this->container->csrf->getTokenNameKey();
@@ -16,7 +17,6 @@ class CsrfViewMiddleware extends Middleware{
 					<input type="hidden" name="'. $valueKey .'" value="'. $value .'">
 				',
 			]);
-
 		$response = $next($request, $response);
 		return $response;
 	}
