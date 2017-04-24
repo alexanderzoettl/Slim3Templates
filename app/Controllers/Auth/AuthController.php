@@ -9,6 +9,11 @@ use Respect\Validation\Validator as v;
 class AuthController extends Controller
 {
 
+	public function getLogout($request, $response){
+		$this->auth->logout();
+		return $response->withRedirect($this->router->pathFor('home'));
+	}
+
 	public function getSignIn($request, $response){
 		return $this->view->render($response, 'auth/signin.twig');
 	}
@@ -30,8 +35,10 @@ class AuthController extends Controller
 			$request->getParam('password')
 		);
 
-		if(!$auth)
+		if(!$auth){
+					$this->flash->addMessage('danger', 'Falsche Zugansdaten!');
 			return $response->withRedirect($this->router->pathFor('auth.signin'));
+		}
 
 		return $response->withRedirect($this->router->pathFor('home'));
 
@@ -52,7 +59,6 @@ class AuthController extends Controller
 			'surname' => v::noWhitespace()->notEmpty()->alpha(),
 			'password' => v::notEmpty()->noWhitespace()->matchesConfirmPassword($request->getParam('confirm_password')),
 			'confirm_password' => v::notEmpty(),
-
 		]);
 
 		//On Validation error, return to Signup and display errors
@@ -68,6 +74,8 @@ class AuthController extends Controller
 			$request->getParam('name'),
 			$request->getParam('surname')
 		);
+
+		$this->flash->addMessage('success', 'Sie wurden erfolgreich registriert!');
 
 		//Redirect to HomePage
 		return $response->withRedirect($this->router->pathFor('home'));

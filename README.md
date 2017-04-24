@@ -7,3 +7,4 @@ Eine überholte Verison von KFM 1.0 wobei auf Professionalität und Effizienz ge
 * Eloquent
 * Respect/Validation
 * CSRF-Protection
+* SlimFlash

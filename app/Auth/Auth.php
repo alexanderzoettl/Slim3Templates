@@ -8,7 +8,17 @@ use App\Models\User;
 class Auth{
 
 
-	public function signedIn(){
+	public function logout(){
+		unset($_SESSION['user']);
+	}
+
+	public function user(){
+		if(isset($_SESSION['user'])){
+			return User::find($_SESSION['user']);
+		}
+	}
+
+	public function check(){
 		return isset($_SESSION['user']);
 	}
 

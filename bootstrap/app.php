@@ -39,6 +39,16 @@ $container['db'] = function ($container) use ($capsule){
 	return $capsule;
 };
 
+//Auth
+$container['auth'] = function($container){
+	return new \App\Auth\Auth($container);
+};
+
+//Flash
+$container['flash'] = function($container){
+	return new \Slim\Flash\Messages();
+};
+
 //Twig
 $container['view'] = function ($container){
 
@@ -55,6 +65,16 @@ $container['view'] = function ($container){
 			$container->router,
 			$container->request->getUri()
 		));
+
+	$view->getEnvironment()->addGlobal('auth',[
+		'check' =>  $container->auth->check(),
+		'user' =>  $container->auth->user(),
+	]);
+
+	$view->getEnvironment()->addGlobal('flash',$container->flash);
+
+
+
 	//Setzt das fertige Twig Objekt als container an der Stelle 'view'
 	return $view;
 };
@@ -72,10 +92,6 @@ $container['StaticPageController'] = function($container){
 
 $container['AuthController'] = function($container){
 	return new \App\Controllers\Auth\AuthController($container);
-};
-
-$container['auth'] = function($container){
-	return new \App\Auth\Auth($container);
 };
 
 //CSRF
