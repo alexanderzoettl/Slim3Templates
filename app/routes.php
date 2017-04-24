@@ -1,18 +1,35 @@
 <?php
 
-//Static Pages
+use App\Middleware\AuthMiddleware;
+use App\Middleware\GuestMiddleware;
+
+//Für alle
 $app->get('/', 'StaticPageController:home')->setName('home');
 $app->get('/about', 'StaticPageController:about')->setName('about');
 $app->get('/impressum', 'StaticPageController:impressum')->setName('impressum');
 
-//Authentication (Signup, Signin)
-$app->get('/signup', 'AuthController:getSignUp')->setName('auth.signup');
-$app->post('/signup', 'AuthController:postSignUp');
 
-$app->get('/signin', 'AuthController:getSignIn')->setName('auth.signin');
-$app->post('/signin', 'AuthController:postSignIn');
+//Nur für nicht eingeloggte
+$app->group('', function() {
 
-$app->get('/logout', 'AuthController:getLogout')->setName('auth.logout');
+	//Authentication (Signup, Signin)
+	$this->get('/signup', 'AuthController:getSignUp')->setName('auth.signup');
+	$this->post('/signup', 'AuthController:postSignUp');
 
-$app->get('/change', 'AuthController:getChangePassword')->setName('auth.change');
-$app->post('/change', 'AuthController:postChangePassword');
+	$this->get('/signin', 'AuthController:getSignIn')->setName('auth.signin');
+	$this->post('/signin', 'AuthController:postSignIn');
+
+})->add(new GuestMiddleware($container));
+
+
+
+
+//Nur für nicht eingeloggte
+$app->group('', function() {
+
+	$this->get('/logout', 'AuthController:getLogout')->setName('auth.logout');
+	$this->get('/change', 'AuthController:getChangePassword')->setName('auth.change');
+	$this->post('/change', 'AuthController:postChangePassword');
+
+})->add(new AuthMiddleware($container));
+
