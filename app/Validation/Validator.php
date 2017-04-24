@@ -41,7 +41,9 @@ class Validator{
     				'noWhitespace' => 'Das Feld darf keine Leerzeichen enthalten!',
     				'matchesConfirmPassword' => 'Passwörter müssen übereinstimmen!',
     				'emailAvailable' => 'Email existiert bereits!',
-    				'noWhitespace' => 'Keine Leerzeichen erlaubt!'
+    				'noWhitespace' => 'Keine Leerzeichen erlaubt!',
+    				'matchesUserPassword' => 'Altes Passwort ist falsch!',
+
     			]));
 
 			}

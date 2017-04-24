@@ -33,4 +33,10 @@ class User extends Model
 	public static function GetByEmail($email){
 		return User::where('email' , $email)->first();
 	}
+
+	public function setPassword($password){
+		$this->update([
+			'hash' => password_hash($password, PASSWORD_DEFAULT)
+		]);
+	}
 }

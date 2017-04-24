@@ -15,7 +15,8 @@
             <li class="{{ routeName == 'about' ? 'active' : '' }}"><a href="{{ path_for('about') }}">About</a></li>
             <li class="{{ routeName == 'impressum' ? 'active' : '' }}"><a href="{{ path_for('impressum') }}">Impressum</a></li>
             {% if auth.check %}
-              <li><a href="{{ path_for('auth.logout') }}">Hello {{ auth.user.name }} {{ auth.user.surname }}, Logout</a></li>
+              <li><a href="{{ path_for('auth.logout') }}">Logout</a></li>
+              <li class="{{ routeName == 'auth.change' ? 'active' : '' }}"><a href="{{ path_for('auth.change') }}">Passwort Ändern</a></li>
             {% else %}
               <li class="{{ routeName == 'auth.signup' ? 'active' : '' }}"><a href="{{ path_for('auth.signup') }}">Registrieren</a></li>
               <li class="{{ routeName == 'auth.signin' ? 'active' : '' }}"><a href="{{ path_for('auth.signin') }}">Anmelden</a></li>

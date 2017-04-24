@@ -9,11 +9,35 @@ use Respect\Validation\Validator as v;
 class AuthController extends Controller
 {
 
+	//========== CHANGE PASSWORD ==========//
+	public function getChangePassword($request, $response){
+		return $this->view->render($response, 'auth/change.twig');
+	}
+
+	public function postChangePassword($request, $response){
+
+		$validation = $this->validator->validate($request, [
+			'password_old' => v::noWhitespace()->notEmpty()->matchesUserPassword($this->auth->user()->hash),
+			'password' => v::noWhitespace()->notEmpty(),
+		]);
+
+		if($validation->failed()){
+			return $response->withRedirect($this->router->pathFor('auth.change'));
+		}
+
+		$this->auth->user()->setPassword($request->getParam('password'));
+		$this->flash->addMessage('success', 'Passwort geändert! Bitte neu anmelden!');
+		$this->auth->logout();
+		return $response->withRedirect($this->router->pathFor('auth.signin'));
+	}
+
+	//========== LOGOUT ==================//
 	public function getLogout($request, $response){
 		$this->auth->logout();
 		return $response->withRedirect($this->router->pathFor('home'));
 	}
 
+	//========== SIGN IN ================//
 	public function getSignIn($request, $response){
 		return $this->view->render($response, 'auth/signin.twig');
 	}
@@ -25,7 +49,6 @@ class AuthController extends Controller
 			'password' => v::noWhitespace()->notEmpty(),
 		]);
 
-		//On Validation error, return to Signin and display errors
 		if($validation->failed()){
 			return $response->withRedirect($this->router->pathFor('auth.signin'));
 		}
@@ -36,7 +59,7 @@ class AuthController extends Controller
 		);
 
 		if(!$auth){
-					$this->flash->addMessage('danger', 'Falsche Zugansdaten!');
+			$this->flash->addMessage('danger', 'Falsche Zugansdaten!');
 			return $response->withRedirect($this->router->pathFor('auth.signin'));
 		}
 
@@ -44,15 +67,13 @@ class AuthController extends Controller
 
 	}
 
-	//Get Request Signup
+	//========== SIGN OUT ==============//
 	public function getSignUp($request, $response){
 		return $this->view->render($response, 'auth/signup.twig');
 	}
 
-	//Post Request Signup
 	public function postSignUp($request, $response){
 
-		//Validation Rules
 		$validation = $this->validator->validate($request, [
 			'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
 			'name' => v::noWhitespace()->notEmpty()->alpha(),
@@ -61,13 +82,10 @@ class AuthController extends Controller
 			'confirm_password' => v::notEmpty(),
 		]);
 
-		//On Validation error, return to Signup and display errors
 		if($validation->failed()){
 			return $response->withRedirect($this->router->pathFor('auth.signup'));
 		}
 
-
-		//No erros: Add User to Table
 		$user = User::Add(
 			$request->getParam('email'),
 			password_hash($request->getParam('password'), PASSWORD_DEFAULT),
@@ -77,7 +95,6 @@ class AuthController extends Controller
 
 		$this->flash->addMessage('success', 'Sie wurden erfolgreich registriert!');
 
-		//Redirect to HomePage
 		return $response->withRedirect($this->router->pathFor('home'));
 	}
 }
