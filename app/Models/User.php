@@ -15,13 +15,13 @@ class User extends Model
 	];
 
 	//Adds a new user to the users table
-	public static function Add($email, $hash, $name, $surname){
+	public static function Add($email,$password,$name, $surname){
 		User::create([
 			'name' => $name,
 			'surname' => $surname,
-			'hash' => $hash,
 			'email' => $email,
-		]);
+		])->setPassword($password);
+
 	}
 
 	//Gets the user by id

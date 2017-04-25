@@ -53,7 +53,7 @@ class AuthController extends Controller
 			return $response->withRedirect($this->router->pathFor('auth.signin'));
 		}
 
-		$auth = $this->auth->attempt(
+		$auth = $this->auth->login(
 			$request->getParam('email'),
 			$request->getParam('password')
 		);
@@ -88,7 +88,7 @@ class AuthController extends Controller
 
 		$user = User::Add(
 			$request->getParam('email'),
-			password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+			$request->getParam('password'),
 			$request->getParam('name'),
 			$request->getParam('surname')
 		);

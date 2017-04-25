@@ -22,7 +22,7 @@ class Auth{
 		return isset($_SESSION['user']);
 	}
 
-	public function attempt($email, $password){
+	public function login($email, $password){
 
 		$user = User::getByEmail($email);
 
