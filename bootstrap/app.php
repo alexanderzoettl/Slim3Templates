@@ -73,8 +73,6 @@ $container['view'] = function ($container){
 
 	$view->getEnvironment()->addGlobal('flash',$container->flash);
 
-
-
 	//Setzt das fertige Twig Objekt als container an der Stelle 'view'
 	return $view;
 };
@@ -98,6 +96,12 @@ $container['AuthController'] = function($container){
 $container['csrf'] = function($container){
 	return new \Slim\Csrf\Guard;
 };
+
+//MAIL
+$container['mailer'] = function($container){
+	return new \App\Mail\Mailer($container->view);
+};
+
 
 //Middlware
 $app->add(new \App\Middleware\NavbarLocationMiddleware($container));

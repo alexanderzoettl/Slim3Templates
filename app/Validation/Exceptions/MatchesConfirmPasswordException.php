@@ -3,7 +3,7 @@
 namespace App\Validation\Exceptions;
 use Respect\Validation\Exceptions\ValidationException;
 
-class MatchesUserPasswordException extends ValidationException{
+class MatchesConfirmPasswordException extends ValidationException{
 
 	public static $defaultTemplates = [
 		self::MODE_DEFAULT => [

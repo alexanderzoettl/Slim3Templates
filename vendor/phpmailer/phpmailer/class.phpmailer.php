@@ -16,7 +16,6 @@
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 /**
  * PHPMailer - PHP email creation and transport class.
  * @package PHPMailer

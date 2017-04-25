@@ -19,6 +19,9 @@ $app->group('', function() {
 	$this->get('/signin', 'AuthController:getSignIn')->setName('auth.signin');
 	$this->post('/signin', 'AuthController:postSignIn');
 
+	$this->get('/activate', 'AuthController:getActivateAccount');
+
+
 })->add(new GuestMiddleware($container));
 
 

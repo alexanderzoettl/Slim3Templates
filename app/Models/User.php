@@ -11,16 +11,20 @@ class User extends Model
 	
 	//Changable Columns
 	protected $fillable = [
-		'email', 'name', 'surname', 'hash'
+		'email', 'name', 'surname', 'hash', 'activation_hash', 'activated'
 	];
 
 	//Adds a new user to the users table
-	public static function Add($email,$password,$name, $surname){
-		User::create([
+	public static function Add($email, $password, $name, $surname){
+		$user = User::create([
 			'name' => $name,
 			'surname' => $surname,
 			'email' => $email,
-		])->setPassword($password);
+			'activation_hash' => uniqid(),
+			'activated' => false
+		]);
+		$user->setPassword($password);
+		return $user;
 
 	}
 
@@ -37,6 +41,13 @@ class User extends Model
 	public function setPassword($password){
 		$this->update([
 			'hash' => password_hash($password, PASSWORD_DEFAULT)
+		]);
+	}
+
+	public function activate(){
+		$this->update([
+			'activation_hash' => '',
+			'activated' => true
 		]);
 	}
 }

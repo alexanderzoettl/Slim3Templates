@@ -9,6 +9,23 @@ use Respect\Validation\Validator as v;
 class AuthController extends Controller
 {
 
+	//========= ACTIVATE ACCOUNT ==========//
+	public function getActivateAccount($request, $response){
+		$code = $request->getParam('code');
+
+		$user = User::where('activation_hash' , $code)->first();
+		if($user){
+			$user->activate();
+			$this->flash->addMessage('success', 'Activation Successfull!');
+			return $response->withRedirect($this->router->pathFor('auth.signin'));
+		}
+
+		$this->flash->addMessage('danger', 'Wrong activation code!');
+		return $response->withRedirect($this->router->pathFor('auth.signin'));
+		
+	}
+
+
 	//========== CHANGE PASSWORD ==========//
 	public function getChangePassword($request, $response){
 		return $this->view->render($response, 'auth/change.twig');
@@ -63,6 +80,15 @@ class AuthController extends Controller
 			return $response->withRedirect($this->router->pathFor('auth.signin'));
 		}
 
+		//If not activated
+		if(!$this->auth->user()->activated){
+			$this->auth->logout();
+			$this->flash->addMessage('danger', 'Bestätigungsmail wurde nicht bestätigt! Im Spam Ordner nachsehen!');
+			return $response->withRedirect($this->router->pathFor('auth.signin'));
+		}
+
+
+		$this->flash->addMessage('success', 'Sie wurden eingeloggt!');
 		return $response->withRedirect($this->router->pathFor('home'));
 
 	}
@@ -93,8 +119,17 @@ class AuthController extends Controller
 			$request->getParam('surname')
 		);
 
-		$this->flash->addMessage('success', 'Sie wurden erfolgreich registriert!');
+		//If Mail fails, activate user
+		if (!$this->mailer->sendActivationMail($user)){
 
-		return $response->withRedirect($this->router->pathFor('home'));
+			$this->flash->addMessage('success', 'Sie wurden erfolgreich registriert!');
+			$user->activate();
+
+		}else
+			$this->flash->addMessage('warning', 'Sie wurden erfolgreich registriert! Bitte bestätigen Sie die Aktivierungsmail!');
+
+
+		return $response->withRedirect($this->router->pathFor('auth.signin'));
+
 	}
 }
