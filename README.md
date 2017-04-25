@@ -8,3 +8,4 @@ Eine überholte Verison von KFM 1.0 wobei auf Professionalität und Effizienz ge
 * Respect/Validation
 * CSRF-Protection
 * SlimFlash
+* PhpMailer
