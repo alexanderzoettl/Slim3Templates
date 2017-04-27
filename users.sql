@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 25. Apr 2017 um 21:04
+-- Erstellungszeit: 27. Apr 2017 um 21:24
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.5
 
@@ -33,6 +33,7 @@ CREATE TABLE `users` (
   `name` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
   `activation_hash` varchar(13) NOT NULL,
+  `forgot_hash` varchar(13) NOT NULL,
   `activated` tinyint(1) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
@@ -56,7 +57,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

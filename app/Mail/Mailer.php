@@ -39,4 +39,15 @@ class Mailer{
 		);
 	}
 
+	public function sendForgotPasswordMail($user){
+
+		return $this->send(
+			'templates/mail/forgotMail.twig',
+			['forgot_hash' => $user->forgot_hash ],
+			'Password Reset Mail',
+			$user->email,
+			$user->name . ' ' . $user->surname
+		);
+	}
+
 }

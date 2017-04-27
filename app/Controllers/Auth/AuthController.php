@@ -9,6 +9,88 @@ use Respect\Validation\Validator as v;
 class AuthController extends Controller
 {
 
+	//========= Forgot Password ==========//
+
+	public function getForgotPassword($request, $response){
+
+		if($code = $request->getParam('code')){
+			//Check code get user and display change password shit
+			if(User::where('forgot_hash', $code)->count() === 1){
+					return $this->view->render($response, 'auth/forgot_change.twig', ['code' => $code]);
+			}else{
+				$this->flash->addMessage('danger', 'Ungültiger Code!');
+				return $response->withRedirect($this->router->pathFor('auth.forgot'));
+			}
+			//return forgot_change
+
+		}else{
+			//Display email shit
+			return $this->view->render($response, 'auth/forgot_email.twig');
+		}
+
+	}
+
+	public function postForgotPassword($request, $response){
+		
+		if($request->getParam('type') == 'email'){
+			//Validate email
+			$validation = $this->validator->validate($request, [
+				'email' => v::noWhitespace()->notEmpty()->email(),
+			]);
+
+			if($validation->failed()){
+				return $response->withRedirect($this->router->pathFor('auth.forgot'));
+			}
+			//Check if exists
+			$email = $request->getParam('email');
+			if($user = User::GetByEmail($email)){
+				//Generate link_hash
+				$hash = uniqid();
+				$user->setForgotHash($hash);
+				//send Email
+				$mail = $this->mailer->sendForgotPasswordMail($user);
+				//If mail send failed
+				if(!$mail){
+					$this->flash->addMessage('danger', 'Email sending failed!');
+					return $response->withRedirect($this->router->pathFor('auth.forgot'));	
+				}
+
+			}
+			//refresh and notify user
+			$this->flash->addMessage('success', 'Wenn benutzer existiert wurde reset mail verschickt!');
+			return $response->withRedirect($this->router->pathFor('auth.forgot'));
+
+		}else{
+
+			$code = $request->getParam('code');
+
+			//validate passwords
+			$validation = $this->validator->validate($request, [
+				'password' => v::noWhitespace()->notEmpty()->matchesConfirmPassword($request->getParam('confirm_password')),
+				'confirm_password' => v::noWhitespace()->notEmpty()
+			]);
+
+			if($validation->failed()){
+				return $response->withRedirect($this->router->pathFor('auth.forgot'). '?code=' . $code);
+			}
+
+			//check hidden field link
+			if(User::where('forgot_hash', $code)->count() === 1){
+				$user = User::where('forgot_hash', $code)->first();
+				$user->setPassword($request->getParam('password'));
+				$user->setForgotHash('');
+				$this->flash->addMessage('success', 'Password wurde aktualisiert!');
+				return $response->withRedirect($this->router->pathFor('auth.signin'));
+			}
+
+			$this->flash->addMessage('danger', 'Code missmatch error!');
+			return $response->withRedirect($this->router->pathFor('auth.forgot'). '?code=' . $code);
+
+	
+		}
+	}
+
+
 	//========= ACTIVATE ACCOUNT ==========//
 	public function getActivateAccount($request, $response){
 		$code = $request->getParam('code');

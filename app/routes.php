@@ -21,13 +21,16 @@ $app->group('', function() {
 
 	$this->get('/activate', 'AuthController:getActivateAccount');
 
+	$this->get('/forgot', 'AuthController:getForgotPassword')->setName('auth.forgot');
+	$this->post('/forgot', 'AuthController:postForgotPassword');
+
 
 })->add(new GuestMiddleware($container));
 
 
 
 
-//Nur für nicht eingeloggte
+//Nur für  eingeloggte
 $app->group('', function() {
 
 	$this->get('/logout', 'AuthController:getLogout')->setName('auth.logout');

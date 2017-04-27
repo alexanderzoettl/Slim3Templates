@@ -20,6 +20,7 @@
             {% else %}
               <li class="{{ routeName == 'auth.signup' ? 'active' : '' }}"><a href="{{ path_for('auth.signup') }}">Registrieren</a></li>
               <li class="{{ routeName == 'auth.signin' ? 'active' : '' }}"><a href="{{ path_for('auth.signin') }}">Anmelden</a></li>
+              <li class="{{ routeName == 'auth.forgot' ? 'active' : '' }}"><a href="{{ path_for('auth.forgot') }}">Passwort Vergessen</a></li>
             {% endif %}
           </ul>
         </div>

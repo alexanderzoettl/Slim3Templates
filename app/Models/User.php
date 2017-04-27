@@ -11,7 +11,7 @@ class User extends Model
 	
 	//Changable Columns
 	protected $fillable = [
-		'email', 'name', 'surname', 'hash', 'activation_hash', 'activated'
+		'email', 'name', 'surname', 'hash', 'activation_hash', 'activated', 'forgot_hash'
 	];
 
 	//Adds a new user to the users table
@@ -48,6 +48,12 @@ class User extends Model
 		$this->update([
 			'activation_hash' => '',
 			'activated' => true
+		]);
+	}
+
+	public function setForgotHash($hash){
+		$this->update([
+			'forgot_hash' => $hash
 		]);
 	}
 }
