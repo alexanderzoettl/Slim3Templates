@@ -2,23 +2,26 @@
 
 namespace App\Mail;
 
+use App\Configuration\Configuration as conf;
+
 class Mailer{
 
 	protected $mailer;
 	protected $view;
 
 	public function __construct($view){
+
 		$this->view = $view;
 		$this->mailer = new \PHPMailer;
 		$this->mailer->IsSMTP();
-		$this->mailer->Host = 'vweb06.nitrado.net';
+		$this->mailer->Host = conf::$smtp['host'];
 		$this->mailer->SMTPAuth = true;
-		$this->mailer->Port = 25;
-		$this->mailer->Username = 'mailer@xeroserver.org';
-		$this->mailer->Password = 'mailer123;';
+		$this->mailer->Port = conf::$smtp['port'];
+		$this->mailer->Username = conf::$smtp['username'];
+		$this->mailer->Password = conf::$smtp['password'];
 		$this->mailer->isHTML(true);
-		$this->mailer->From = "mailer@xeroserver.org";
-		$this->mailer->FromName = "PHPMailer";
+		$this->mailer->From = conf::$smtp['mail'];
+		$this->mailer->FromName = conf::$smtp['name'];
 	}
 
 	public function send($twig, $data, $subject, $email, $name){

@@ -1,6 +1,7 @@
 <?php
 
 use Respect\Validation\Validator as v;
+use App\Configuration\Configuration as conf;
 
 session_start();
 
@@ -13,15 +14,7 @@ $app = new \Slim\App([
 		'displayErrorDetails' => true,
 		'determineRouteBeforeAppMiddleware' => true,
 		'addContentLengthHeader' => false,
-		'db' => [
-			'driver' => 'mysql',
-			'host' => 'localhost',
-			'database' => 'kfm2.0',
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-			'collation' => 'utf8_unicode_ci'
-		]
+		'db' => conf::$db
 	]
 
 ]);
