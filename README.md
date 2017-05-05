@@ -1,7 +1,7 @@
-# Kartflohmarkt 2.0
-Eine überholte Verison von KFM 1.0 wobei auf Professionalität und Effizienz geachtet wird.
+# Slim3 Base Template
+A private template for building great websites with.
 
-## Verwendete Technologien
+## Used Technologies
 * Slim3
 * Twig
 * Eloquent
