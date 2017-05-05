@@ -2,6 +2,7 @@
 
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
+use App\Configuration\Configuration as conf;
 
 //Für alle
 $app->get('/', 'StaticPageController:home')->setName('home');
@@ -18,11 +19,17 @@ $app->group('', function() {
 
 	$this->get('/signin', 'AuthController:getSignIn')->setName('auth.signin');
 	$this->post('/signin', 'AuthController:postSignIn');
-
-	$this->get('/activate', 'AuthController:getActivateAccount');
-
 	$this->get('/forgot', 'AuthController:getForgotPassword')->setName('auth.forgot');
 	$this->post('/forgot', 'AuthController:postForgotPassword');
+	
+	//Only then email activation is enabled
+	if(conf::$enableEmailActivation){
+		$this->get('/activate', 'AuthController:getActivateAccount');
+		
+	}else //Dummy routes
+	{
+		$this->get('/activate', 'StaticPageController:home');
+	}
 
 
 })->add(new GuestMiddleware($container));

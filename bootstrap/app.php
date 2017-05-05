@@ -96,6 +96,7 @@ $container['mailer'] = function($container){
 };
 
 
+
 //Middlware
 $app->add(new \App\Middleware\NavbarLocationMiddleware($container));
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));

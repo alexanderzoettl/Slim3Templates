@@ -5,6 +5,8 @@ namespace App\Controllers\Auth;
 use \App\Controllers\Controller;
 use \App\Models\User;
 use Respect\Validation\Validator as v;
+use App\Configuration\Configuration as conf;
+
 
 class AuthController extends Controller
 {
@@ -163,7 +165,7 @@ class AuthController extends Controller
 		}
 
 		//If not activated
-		if(!$this->auth->user()->activated){
+		if(!$this->auth->user()->activated AND conf::$enableEmailActivation){
 			$this->auth->logout();
 			$this->flash->addMessage('danger', 'Bestätigungsmail wurde nicht bestätigt! Im Spam Ordner nachsehen!');
 			return $response->withRedirect($this->router->pathFor('auth.signin'));
@@ -202,13 +204,20 @@ class AuthController extends Controller
 		);
 
 		//If Mail fails, activate user
-		if (!$this->mailer->sendActivationMail($user)){
+		if(conf::$enableEmailActivation){
+			if (!$this->mailer->sendActivationMail($user)){
 
+				$this->flash->addMessage('success', 'Sie wurden erfolgreich registriert!');
+				$user->activate();
+
+			}else
+				$this->flash->addMessage('warning', 'Sie wurden erfolgreich registriert! Bitte bestätigen Sie die Aktivierungsmail!');
+		}else
+		{
 			$this->flash->addMessage('success', 'Sie wurden erfolgreich registriert!');
 			$user->activate();
-
-		}else
-			$this->flash->addMessage('warning', 'Sie wurden erfolgreich registriert! Bitte bestätigen Sie die Aktivierungsmail!');
+		}
+	
 
 
 		return $response->withRedirect($this->router->pathFor('auth.signin'));

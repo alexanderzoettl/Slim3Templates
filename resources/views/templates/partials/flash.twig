@@ -1,23 +1,29 @@
 {% if flash.getMessage('info') %}
-<div class="alert alert-info">
+<div class="alert alert-info" id="flashAlert">
 	{{ flash.getMessage('info') | first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('danger') %}
-<div class="alert alert-danger">
+<div class="alert alert-danger" id="flashAlert">
 	{{ flash.getMessage('danger') | first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('warning') %}
-<div class="alert alert-warning">
+<div class="alert alert-warning" id="flashAlert">
 	{{ flash.getMessage('warning') | first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('success') %}
-<div class="alert alert-success">
+<div class="alert alert-success" id="flashAlert">
 	{{ flash.getMessage('success') | first }}
 </div>
 {% endif %}
+
+<script>
+  setTimeout(function() {
+      $('#flashAlert').fadeOut('slow');
+  }, 3000);
+</script>
