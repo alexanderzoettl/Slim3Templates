@@ -5,7 +5,8 @@ namespace App\Middleware;
 class NavbarLocationMiddleware extends Middleware{
 
 	public function __invoke($request, $response, $next){
-
+		
+		//TODO: Preventing null pointer exception when calling unknown routes
 		$name = $request->getAttribute('route')->getName();
 
 		if($name)
