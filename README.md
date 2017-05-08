@@ -1,4 +1,4 @@
-# Slim3 Base Template
+# Slim3 Login/Register Template
 A private template for building great websites with.
 
 ## Used Technologies
