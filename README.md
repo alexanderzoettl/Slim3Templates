@@ -1,5 +1,4 @@
-# Slim3 Login/Register Template
-A private template for building great websites with.
+# Slim3 Base Template
 
 ## Used Technologies
 * Slim3
@@ -8,4 +7,3 @@ A private template for building great websites with.
 * Respect/Validation
 * CSRF-Protection
 * SlimFlash
-* PhpMailer
