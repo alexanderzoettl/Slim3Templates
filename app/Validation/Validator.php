@@ -43,7 +43,6 @@ class Validator{
     				'emailAvailable' => 'Email existiert bereits!',
     				'noWhitespace' => 'Keine Leerzeichen erlaubt!',
     				'matchesUserPassword' => 'Altes Passwort ist falsch!',
-
     			]));
 
 			}

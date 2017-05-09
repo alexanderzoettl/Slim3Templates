@@ -14,15 +14,8 @@
             <li class="{{ routeName == 'home' ? 'active' : '' }}"><a href="{{ path_for('home') }}">Home</a></li>
             <li class="{{ routeName == 'about' ? 'active' : '' }}"><a href="{{ path_for('about') }}">About</a></li>
             <li class="{{ routeName == 'impressum' ? 'active' : '' }}"><a href="{{ path_for('impressum') }}">Impressum</a></li>
-            {% if auth.check %}
-              <li><a href="{{ path_for('auth.logout') }}">Logout</a></li>
-              <li class="{{ routeName == 'auth.change' ? 'active' : '' }}"><a href="{{ path_for('auth.change') }}">Passwort Ändern</a></li>
-            {% else %}
-              <li class="{{ routeName == 'auth.signup' ? 'active' : '' }}"><a href="{{ path_for('auth.signup') }}">Registrieren</a></li>
-              <li class="{{ routeName == 'auth.signin' ? 'active' : '' }}"><a href="{{ path_for('auth.signin') }}">Anmelden</a></li>
-              <li class="{{ routeName == 'auth.forgot' ? 'active' : '' }}"><a href="{{ path_for('auth.forgot') }}">Passwort Vergessen</a></li>
-            {% endif %}
-          </ul>
+            <li class="{{ routeName == 'exampleForm' ? 'active' : '' }}"><a href="{{ path_for('exampleForm') }}">Example Form</a></li>
+          <ul>
         </div>
       </div>
     </nav>
